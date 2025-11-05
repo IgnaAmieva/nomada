@@ -1,0 +1,220 @@
+@import "tailwindcss";
+
+/* =========================
+   🎨 TOKENS NÓMADA – Pastel cómodo (sin gradientes)
+   ========================= */
+:root{
+  /* Paleta (ligeramente más sobria) */
+  --forest-700:#1f3b34;   /* títulos */
+  --olive-500:#8ca178;    /* acentos/links */
+  --coral-500:#ef9b8e;    /* botón primario */
+  --cream-050:#f5f3ec;    /* crema claro */
+  --cream-100:#eee9df;    /* crema medio (FONDO) */
+  --card:#fbfaf7;         /* superficies */
+
+  /* Texto */
+  --fg:#25322c;           /* principal */
+  --muted:#616f67;        /* secundario */
+
+  /* Layout / espaciados */
+  --navbar-h:80px;
+  --gap-xl:3rem;
+
+  /* Bordes y sombras suaves */
+  --border: 1px solid rgba(13,20,17,.08);
+  --shadow: 0 8px 28px rgba(13,20,17,.06), inset 0 1px 0 rgba(255,255,255,.65);
+
+  /* Tipografía */
+  --lh:1.55;              /* altura de línea base */
+  --measure:65ch;         /* ancho cómodo de texto */
+
+  /* Carrusel */
+  --carousel-duration: 12000ms;          /* velocidad de ciclo */
+  --carousel-ease: cubic-bezier(.2,.6,.2,1);
+}
+
+@media (max-width: 768px){
+  :root{ --gap-xl:2rem; --measure:60ch; }
+}
+
+/* =========================
+   🌞 Base + tema claro
+   ========================= */
+html{ color-scheme: light; scroll-behavior:smooth; }
+html, body{ height:100%; }
+*{ box-sizing:border-box; }
+body{
+  margin:0;
+  color:var(--fg);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+  line-height: var(--lh);
+  background: var(--cream-100);
+}
+
+/* =========================
+   ♿ Accesibilidad
+   ========================= */
+a,button,input,select,textarea { outline: none; }
+:focus-visible{
+  outline:2px solid var(--olive-500);
+  outline-offset:3px;
+  border-radius:.5rem;
+}
+.skip-link{
+  position:absolute; left:-999px; top:0; z-index:9999;
+  background:#fff; color:var(--fg);
+  padding:.75rem 1rem; border-radius:0 0 .75rem .75rem;
+  box-shadow:0 8px 20px rgba(0,0,0,.12);
+}
+.skip-link:focus{ left:0; }
+
+/* =========================
+   🧱 Utilidades de layout/legibilidad
+   ========================= */
+.container-tbv{ max-width:1200px; margin:0 auto; padding:0 1rem; }
+.section{ padding: var(--gap-xl) 0; }
+.content-max{ max-width: var(--measure); }
+
+/* Botones */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
+  padding:.85rem 1.25rem; border-radius:9999px; font-weight:700;
+  transition:transform .2s ease, opacity .2s ease, background-color .2s ease;
+}
+.btn:active{ transform:translateY(1px); }
+.btn-primary{ background:var(--coral-500); color:#2b2b2b; }
+.btn-primary:hover{ opacity:.95; transform:translateY(-1px); }
+.btn-outline{ border:1px solid rgba(13,20,17,.12); color:var(--fg); background:#fff; }
+.btn-outline:hover{ background:#f7f5f0; }
+
+/* Superficie (cards) – sobria */
+.surface{
+  background: var(--card);
+  border: var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+}
+
+/* Navbar claro */
+.navbar{
+  position: sticky; top:0; z-index:50; height:var(--navbar-h);
+  background: rgba(255,255,255,.85);
+  border-bottom: 1px solid rgba(13,20,17,.08);
+  box-shadow: 0 8px 24px rgba(13,20,17,.06);
+  backdrop-filter: saturate(140%) blur(6px);
+}
+
+/* Hero compacto (el navbar no empuja) */
+.hero{ padding-top: var(--navbar-h); }
+
+/* Tabs (plana, legible) */
+.tabs{
+  display:grid; grid-template-columns: repeat(4, minmax(0,1fr));
+  gap:.5rem; padding:.5rem; border-radius: 12px;
+  background: #f1eee6;
+  border: 1px solid rgba(13,20,17,.08);
+}
+.tab{
+  text-align:center; padding:.85rem .75rem; font-weight:700;
+  border-radius:10px; user-select:none;
+  background: #ffffff;
+  border: 1px solid rgba(13,20,17,.08);
+  color: var(--fg);
+}
+.tab--active{
+  background: #fff3f0;
+  border-color: rgba(239,155,142,.45);
+}
+
+/* Texto secundario */
+.muted{ color: var(--muted); }
+
+/* ===== Transiciones suaves en elementos interactivos ===== */
+.surface, .btn { transition: box-shadow .25s ease, transform .25s ease, background-color .25s ease; }
+.surface:hover { box-shadow: 0 10px 32px rgba(13,20,17,.08), inset 0 1px 0 rgba(255,255,255,.65); }
+
+/* ===== Detalle de fondo minimal (líneas y puntos) ===== */
+body::before{
+  content:"";
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 0;
+  background:
+    /* líneas diagonales suaves (verde oscuro y coral muy translúcido) */
+    linear-gradient( 115deg, rgba(31,59,52,.06) 0%, transparent 18%) 0 10% / 100% 30% no-repeat,
+    linear-gradient(-115deg, rgba(239,155,142,.05) 0%, transparent 22%) 0 75% / 100% 28% no-repeat,
+    /* patrón de puntos muy finos (lima) */
+    radial-gradient(circle at 20% 35%, rgba(140,161,120,.10) 2px, transparent 3px) 0 0 / 28px 28px;
+  mask-image: linear-gradient(to bottom, transparent 0, black 10%, black 90%, transparent 100%);
+}
+.navbar, main, footer { position: relative; z-index: 1; }
+
+/* ===============================
+   🎞 Carrusel por FADE (sin gaps)
+   =============================== */
+.fade-carousel{
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+}
+.fade-carousel__stage{
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.fade-slide{
+  position: absolute; inset: 0;
+  background: #fff;     /* evita parpadeos en cambio de imagen */
+  opacity: 0;
+  animation: fade-cycle var(--carousel-duration) ease-in-out infinite;
+}
+.fade-slide--1{ animation-delay: 0ms; }
+.fade-slide--2{ animation-delay: calc(var(--carousel-duration) / 3); }
+.fade-slide--3{ animation-delay: calc(2 * var(--carousel-duration) / 3); }
+
+/* 3 fotos: cada una visible ~1/3 del ciclo, con fundido */
+@keyframes fade-cycle{
+  0%   { opacity: 0; }
+  5%   { opacity: 1; }
+  30%  { opacity: 1; }
+  35%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* Pausa al hover */
+.fade-carousel:hover .fade-slide{ animation-play-state: paused; }
+
+/* Accesibilidad: menos animación si el usuario lo pide */
+@media (prefers-reduced-motion: reduce){
+  .fade-slide{ animation: none; opacity: 1; }
+  .fade-slide:not(.fade-slide--1){ display: none; }
+}
+
+/* =========================
+   🧩 Helpers de iconografía
+   ========================= */
+.icon{
+  width: 1.05em;
+  height: 1.05em;
+  display: inline-block;
+  vertical-align: -0.15em;
+  color: var(--forest-700);
+}
+.li{ display: flex; gap: .6rem; align-items: flex-start; }
+.li .icon{ flex: none; margin-top: .15rem; }
+
+/* Navbar por encima de todo (sigue el scroll) */
+.navbar{ z-index: 100; }
+
+/* Menú móvil: se ancla bajo el navbar, cubre ancho completo y queda por encima del contenido */
+.menu-mobile{
+  position: fixed;
+  top: var(--navbar-h);
+  left: 0; right: 0;
+  z-index: 110;
+  margin-top: .5rem;     /* pequeño gap bajo el header */
+  max-height: 70vh;      /* por si hay muchos items */
+  overflow: auto;
+  background: var(--card);
+  border: var(--border);
+  box-shadow: var(--shadow);
+}
