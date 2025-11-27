@@ -571,7 +571,7 @@ export default function Page() {
                     medidas, distribución y terminaciones en conjunto.
                   </p>
                   <p className="muted text-xs mt-2">
-                    Precio a convenir según diseño final (referencia: 800 USD
+                    Precio a convenir según diseño final (referencia: 400 USD
                     por m²).
                   </p>
                   <div className="mt-4 flex gap-3">
