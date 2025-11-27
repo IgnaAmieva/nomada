@@ -56,7 +56,7 @@ const Insta = () => (
   </svg>
 );
 
-/* ===== Galería con flechas + lightbox (fotos modelos) ===== */
+/* ===== Galería con flechas + lightbox (modelos) ===== */
 function ModelGallery({
   images,
   altBase,
@@ -176,18 +176,18 @@ function ModelGallery({
   );
 }
 
-/* ===== Galería sistema (video vertical + foto, con flechas) ===== */
-type MediaItem = {
+/* ===== Galería para sistema agua/gas/cloacas (video + foto) ===== */
+type SystemItem = {
   kind: "video" | "image";
   src: string;
   alt: string;
-  poster?: string;
 };
 
 function SystemGallery({
   items,
+  altBase,
 }: {
-  items: MediaItem[];
+  items: SystemItem[];
   altBase: string;
 }) {
   const [idx, setIdx] = useState(0);
@@ -204,48 +204,47 @@ function SystemGallery({
   const item = items[idx];
 
   return (
-    <div
-      className="relative w-full surface overflow-hidden rounded-[12px] max-h-[560px]"
-      style={{ aspectRatio: "9 / 16" }} // video vertical
-    >
-{item.kind === "video" ? (
-  <video
-    key={item.src}
-    className="w-full h-full object-cover"
-    // autoplay sin sonido
-    muted
-    autoPlay
-    loop
-    playsInline
-  >
-    <source src={item.src} />
-  </video>
-) : (
-  <Image
-    key={item.src}
-    src={item.src}
-    alt={item.alt}
-    fill
-    className="object-cover"
-    sizes="(min-width: 768px) 420px, 100vw"
-  />
-)}
-      <button
-        type="button"
-        aria-label="Anterior"
-        onClick={prev}
-        className="absolute left-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-10 h-10 rounded-full bg-black/20 hover:bg-black/30 text-white"
-      >
-        <ArrowL />
-      </button>
-      <button
-        type="button"
-        aria-label="Siguiente"
-        onClick={next}
-        className="absolute right-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-10 h-10 rounded-full bg-black/20 hover:bg-black/30 text-white"
-      >
-        <ArrowR />
-      </button>
+    <div className="relative w-full max-w-sm md:max-w-full mx-auto">
+      <div className="relative w-full surface overflow-hidden rounded-[12px] aspect-[9/16] md:aspect-[3/4] bg-black">
+        {item.kind === "video" ? (
+          <video
+            key={item.src}
+            className="w-full h-full object-cover"
+            muted
+            autoPlay
+            loop
+            playsInline
+          >
+            <source src={item.src} />
+          </video>
+        ) : (
+          <Image
+            key={item.src}
+            src={item.src}
+            alt={item.alt || altBase}
+            fill
+            className="object-cover"
+            sizes="(min-width: 768px) 420px, 100vw"
+          />
+        )}
+
+        <button
+          type="button"
+          aria-label="Anterior"
+          onClick={prev}
+          className="absolute left-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-10 h-10 rounded-full bg-black/30 hover:bg-black/45 text-white"
+        >
+          <ArrowL />
+        </button>
+        <button
+          type="button"
+          aria-label="Siguiente"
+          onClick={next}
+          className="absolute right-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-10 h-10 rounded-full bg-black/30 hover:bg-black/45 text-white"
+        >
+          <ArrowR />
+        </button>
+      </div>
     </div>
   );
 }
@@ -278,14 +277,12 @@ export default function Page() {
                 </div>
               </div>
 
-              {/* copy optimizado */}
               <p className="mt-3 md:mt-3 text-sm md:text-xl muted leading-relaxed max-w-xs md:max-w-[60ch]">
-                Tiny houses listas para instalar, con estructura liviana, gran
-                aislación y terminaciones premium con opción{" "}
-                <em>off-grid</em>.
+                Tu casa lista para habitar: aislación eficiente, terminaciones
+                premium y opciones <em>off-grid</em>.
               </p>
 
-              {/* CTA: más ordenado en mobile (full width y apilado) */}
+              {/* CTA */}
               <div className="mt-5 md:mt-6 flex flex-col md:flex-row w-full max-w-xs md:max-w-none gap-3">
                 <Link
                   href="#modelos-top"
@@ -355,10 +352,7 @@ export default function Page() {
         </section>
 
         {/* ========================= TÍTULO CATÁLOGO ========================= */}
-        <section
-          id="modelos-top"
-          className="pt-16 md:pt-2 pb-[var(--gap-xl)]"
-        >
+        <section id="modelos-top" className="pt-16 md:pt-2 pb-[var(--gap-xl)]">
           <div className="container-tbv">
             <header className="text-center mb-4">
               <p className="uppercase tracking-wider text-xs font-bold muted">
@@ -372,6 +366,9 @@ export default function Page() {
               </h2>
               <p className="muted content-max mx-auto mt-2">
                 Configurables con opciones off-grid y terminaciones premium.
+              </p>
+              <p className="mt-1 text-xs md:text-sm font-semibold" style={{ color: "var(--forest-700)" }}>
+                Valor de referencia: <span className="font-bold">USD 800 por m²</span>.
               </p>
             </header>
           </div>
@@ -442,6 +439,15 @@ export default function Page() {
                           Montaje:
                         </strong>{" "}
                         90–100 días
+                      </span>
+                    </li>
+                    <li className="li">
+                      <Bolt />{" "}
+                      <span>
+                        <strong className="text-[var(--forest-700)]">
+                          Precio estimado:
+                        </strong>{" "}
+                        USD 12.000 (a 800 USD/m²)
                       </span>
                     </li>
                   </ul>
@@ -516,6 +522,15 @@ export default function Page() {
                         100–120 días
                       </span>
                     </li>
+                    <li className="li">
+                      <Bolt />{" "}
+                      <span>
+                        <strong className="text-[var(--forest-700)]">
+                          Precio estimado:
+                        </strong>{" "}
+                        USD 32.000 (a 800 USD/m²)
+                      </span>
+                    </li>
                   </ul>
                   <div className="mt-4 flex gap-3">
                     <Link href="#ficha-tecnica" className="btn btn-outline">
@@ -555,6 +570,10 @@ export default function Page() {
                     Módulos más grandes, configurables según proyecto. Definimos
                     medidas, distribución y terminaciones en conjunto.
                   </p>
+                  <p className="muted text-xs mt-2">
+                    Precio a convenir según diseño final (referencia: 800 USD
+                    por m²).
+                  </p>
                   <div className="mt-4 flex gap-3">
                     <Link href="#contacto" className="btn btn-primary">
                       <Whats /> Consultar
@@ -587,55 +606,57 @@ export default function Page() {
 
             <div className="surface p-5">
               <div className="grid md:grid-cols-[1.2fr_1fr] gap-4 items-center">
-                {/* Galería vertical: video + foto con flechas */}
                 <SystemGallery
-                  altBase="Sistema de agua, gas y cloacas"
                   items={[
                     {
                       kind: "video",
                       src: "/casa-juan/video-sistema-cloacas.mp4",
-                      poster: "/casa-juan/foto-agua-gas-cloacas.jpeg",
                       alt: "Video del sistema de agua, gas y cloacas",
                     },
                     {
                       kind: "image",
                       src: "/casa-juan/foto-agua-gas-cloaca.jpeg",
-                      alt: "Detalle del sistema de agua, gas y cloacas",
+                      alt: "Detalle de tanques y conexiones",
                     },
                   ]}
+                  altBase="Sistema de agua, gas y cloacas"
                 />
 
-                {/* Texto sistema */}
-                <article
-                  className="surface p-5 border-none shadow-none bg-transparent md:bg-[var(--card)] md:border md:shadow"
-                  aria-label="Sistema de agua, gas y cloacas"
-                >
+                <article className="surface p-5 border-none shadow-none bg-transparent md:bg-[var(--card)] md:border md:shadow">
                   <h3
                     className="text-xl font-extrabold"
                     style={{ color: "var(--forest-700)" }}
                   >
-                    Sistema de agua, gas y cloacas
+                    Instalaciones a medida
                   </h3>
                   <ul className="mt-3 space-y-2 text-sm muted">
                     <li className="li">
-                      <Check />{" "}
+                      <Hammer />{" "}
                       <span>
-                        Tanques y cañerías dimensionados según consumo real.
+                        Preparación para agua fría/caliente, gas y desagües
+                        según normativa local.
+                      </span>
+                    </li>
+                    <li className="li">
+                      <Cube />{" "}
+                      <span>
+                        Opciones de tanques, biodigestor o conexión directa a
+                        red existente.
                       </span>
                     </li>
                     <li className="li">
                       <Check />{" "}
                       <span>
-                        Opciones para red urbana o soluciones autónomas.
-                      </span>
-                    </li>
-                    <li className="li">
-                      <Check />{" "}
-                      <span>
-                        Diseño pensado para instalación rápida en obra seca.
+                        Pensado para montaje rápido en obra y mantenimiento
+                        sencillo.
                       </span>
                     </li>
                   </ul>
+                  <div className="mt-4 flex gap-3">
+                    <Link href="#contacto" className="btn btn-primary">
+                      <Whats /> Consultar instalación
+                    </Link>
+                  </div>
                 </article>
               </div>
             </div>
@@ -714,7 +735,8 @@ export default function Page() {
               </div>
 
               <p className="mt-4 text-xs muted">
-                Nota: mL = metros lineales.
+                Nota: mL = metros lineales. Precios estimados en USD, no incluyen
+                impuestos, flete ni fundaciones de obra.
               </p>
             </div>
           </div>
