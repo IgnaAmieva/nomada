@@ -367,8 +367,13 @@ export default function Page() {
               <p className="muted content-max mx-auto mt-2">
                 Configurables con opciones off-grid y terminaciones premium.
               </p>
-              <p className="mt-1 text-xs md:text-sm font-semibold" style={{ color: "var(--forest-700)" }}>
-                Valor de referencia: <span className="font-bold">USD 400 por m²</span>.
+              <p
+                className="mt-1 text-xs md:text-sm font-semibold"
+                style={{ color: "var(--forest-700)" }}
+              >
+                Valor de referencia{" "}
+                <span className="font-bold">USD 500 por m²</span> solo mano de
+                obra. Los materiales se presupuestan por separado.
               </p>
             </header>
           </div>
@@ -445,9 +450,10 @@ export default function Page() {
                       <Bolt />{" "}
                       <span>
                         <strong className="text-[var(--forest-700)]">
-                          Precio estimado:
+                          Precio estimado mano de obra:
                         </strong>{" "}
-                        USD 6.000 (a 400 USD/m²)
+                        USD 7.500 (15 m² × 500 USD/m²).{" "}
+                        <strong>Materiales no incluidos.</strong>
                       </span>
                     </li>
                   </ul>
@@ -526,9 +532,10 @@ export default function Page() {
                       <Bolt />{" "}
                       <span>
                         <strong className="text-[var(--forest-700)]">
-                          Precio estimado:
+                          Precio estimado mano de obra:
                         </strong>{" "}
-                        USD 16.000 (a 400 USD/m²)
+                        USD 20.000 (40 m² × 500 USD/m²).{" "}
+                        <strong>Materiales no incluidos.</strong>
                       </span>
                     </li>
                   </ul>
@@ -571,8 +578,9 @@ export default function Page() {
                     medidas, distribución y terminaciones en conjunto.
                   </p>
                   <p className="muted text-xs mt-2">
-                    Precio a convenir según diseño final (referencia: 400 USD
-                    por m²).
+                    Precio de mano de obra a convenir según diseño final
+                    (referencia: 500 USD por m²). Los materiales se cotizan por
+                    separado.
                   </p>
                   <div className="mt-4 flex gap-3">
                     <Link href="#contacto" className="btn btn-primary">
@@ -735,8 +743,9 @@ export default function Page() {
               </div>
 
               <p className="mt-4 text-xs muted">
-                Nota: mL = metros lineales. Precios estimados en USD, no incluyen
-                impuestos, flete ni fundaciones de obra.
+                Nota: mL = metros lineales. Valores expresados en USD para mano
+                de obra. No incluyen materiales, impuestos, flete ni
+                fundaciones de obra.
               </p>
             </div>
           </div>
