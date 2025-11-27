@@ -1,23 +1,23 @@
 @import "tailwindcss";
 
 /* =========================
-   🎨 TOKENS NÓMADA – Pastel cómodo (sin gradientes)
+   🎨 TOKENS NÓMADA – Pastel cómodo
    ========================= */
 :root{
-  /* Paleta (ligeramente más sobria) */
-  --forest-700:#1f3b34;   /* títulos */
+  /* Paleta */
+  --forest-700:#1f3b34;   /* títulos / íconos */
   --olive-500:#8ca178;    /* acentos/links */
-  --coral-500:#ef9b8e;    /* botón primario */
+  --coral-500:#ef9b8e;    /* primario */
   --cream-050:#f5f3ec;    /* crema claro */
-  --cream-100:#eee9df;    /* crema medio (FONDO) */
+  --cream-100:#eee9df;    /* crema medio (fondo) */
   --card:#fbfaf7;         /* superficies */
 
   /* Texto */
-  --fg:#25322c;           /* principal */
-  --muted:#616f67;        /* secundario */
+  --fg:#25322c;
+  --muted:#616f67;
 
   /* Layout / espaciados */
-  --navbar-h:80px;
+  --navbar-h:96px;         /* navbar un poco más alto */
   --gap-xl:3rem;
 
   /* Bordes y sombras suaves */
@@ -25,11 +25,11 @@
   --shadow: 0 8px 28px rgba(13,20,17,.06), inset 0 1px 0 rgba(255,255,255,.65);
 
   /* Tipografía */
-  --lh:1.55;              /* altura de línea base */
-  --measure:65ch;         /* ancho cómodo de texto */
+  --lh:1.55;
+  --measure:65ch;
 
-  /* Carrusel */
-  --carousel-duration: 12000ms;          /* velocidad de ciclo */
+  /* Carrusel héroe */
+  --carousel-duration: 12000ms;
   --carousel-ease: cubic-bezier(.2,.6,.2,1);
 }
 
@@ -71,14 +71,23 @@ a,button,input,select,textarea { outline: none; }
 /* =========================
    🧱 Utilidades de layout/legibilidad
    ========================= */
-.container-tbv{ max-width:1200px; margin:0 auto; padding:0 1rem; }
+.container-tbv{
+  max-width: 1320px;
+  margin:0 auto;
+  padding:0 1.5rem;
+}
 .section{ padding: var(--gap-xl) 0; }
 .content-max{ max-width: var(--measure); }
+
+/* Que las secciones con id no queden tapadas por el navbar al hacer scroll */
+section[id]{
+  scroll-margin-top: calc(var(--navbar-h) + 16px);
+}
 
 /* Botones */
 .btn{
   display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
-  padding:.85rem 1.25rem; border-radius:9999px; font-weight:700;
+  padding:.85rem 1.3rem; border-radius:9999px; font-weight:700;
   transition:transform .2s ease, opacity .2s ease, background-color .2s ease;
 }
 .btn:active{ transform:translateY(1px); }
@@ -86,8 +95,9 @@ a,button,input,select,textarea { outline: none; }
 .btn-primary:hover{ opacity:.95; transform:translateY(-1px); }
 .btn-outline{ border:1px solid rgba(13,20,17,.12); color:var(--fg); background:#fff; }
 .btn-outline:hover{ background:#f7f5f0; }
+.btn-compact{ padding:.6rem .9rem; }
 
-/* Superficie (cards) – sobria */
+/* Superficies */
 .surface{
   background: var(--card);
   border: var(--border);
@@ -95,126 +105,121 @@ a,button,input,select,textarea { outline: none; }
   box-shadow: var(--shadow);
 }
 
-/* Navbar claro */
-.navbar{
-  position: sticky; top:0; z-index:50; height:var(--navbar-h);
-  background: rgba(255,255,255,.85);
-  border-bottom: 1px solid rgba(13,20,17,.08);
-  box-shadow: 0 8px 24px rgba(13,20,17,.06);
-  backdrop-filter: saturate(140%) blur(6px);
+/* =====================
+   HERO: desktop vs móvil
+   ===================== */
+
+/* Desktop / general: un poco más cerca del navbar */
+.hero{
+  padding-top: calc(var(--navbar-h) * 0.18);
 }
 
-/* Hero compacto (el navbar no empuja) */
-.hero{ padding-top: var(--navbar-h); }
+/* En móvil: bien despejado del navbar fijo */
+@media (max-width: 767px){
+  .hero{
+    padding-top: calc(var(--navbar-h) * 1.5);
+  }
+}
 
-/* Tabs (plana, legible) */
-.tabs{
-  display:grid; grid-template-columns: repeat(4, minmax(0,1fr));
-  gap:.5rem; padding:.5rem; border-radius: 12px;
-  background: #f1eee6;
-  border: 1px solid rgba(13,20,17,.08);
-}
-.tab{
-  text-align:center; padding:.85rem .75rem; font-weight:700;
-  border-radius:10px; user-select:none;
-  background: #ffffff;
-  border: 1px solid rgba(13,20,17,.08);
-  color: var(--fg);
-}
-.tab--active{
-  background: #fff3f0;
-  border-color: rgba(239,155,142,.45);
+/* Hero grid ocupa casi toda la altura visible en escritorio */
+@media (min-width: 768px){
+  .hero-grid{
+    min-height: calc(100vh - var(--navbar-h) * 0.6);
+  }
 }
 
 /* Texto secundario */
 .muted{ color: var(--muted); }
 
-/* ===== Transiciones suaves en elementos interactivos ===== */
+/* Transiciones suaves */
 .surface, .btn { transition: box-shadow .25s ease, transform .25s ease, background-color .25s ease; }
 .surface:hover { box-shadow: 0 10px 32px rgba(13,20,17,.08), inset 0 1px 0 rgba(255,255,255,.65); }
 
-/* ===== Detalle de fondo minimal (líneas y puntos) ===== */
+/* Fondo con líneas y puntos sutiles */
 body::before{
   content:"";
   position: fixed; inset: 0;
   pointer-events: none; z-index: 0;
   background:
-    /* líneas diagonales suaves (verde oscuro y coral muy translúcido) */
-    linear-gradient( 115deg, rgba(31,59,52,.06) 0%, transparent 18%) 0 10% / 100% 30% no-repeat,
+    linear-gradient(115deg, rgba(31,59,52,.06) 0%, transparent 18%) 0 10% / 100% 30% no-repeat,
     linear-gradient(-115deg, rgba(239,155,142,.05) 0%, transparent 22%) 0 75% / 100% 28% no-repeat,
-    /* patrón de puntos muy finos (lima) */
     radial-gradient(circle at 20% 35%, rgba(140,161,120,.10) 2px, transparent 3px) 0 0 / 28px 28px;
   mask-image: linear-gradient(to bottom, transparent 0, black 10%, black 90%, transparent 100%);
 }
-.navbar, main, footer { position: relative; z-index: 1; }
+main, footer { position: relative; z-index: 1; }
 
 /* ===============================
-   🎞 Carrusel por FADE (sin gaps)
+   🎞 Carrusel héroe por FADE
    =============================== */
-.fade-carousel{
-  position: relative;
-  overflow: hidden;
-  border-radius: 12px;
-}
-.fade-carousel__stage{
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
+.fade-carousel{ position: relative; overflow: hidden; border-radius: 12px; }
+.fade-carousel__stage{ position: relative; width: 100%; height: 100%; }
 .fade-slide{
-  position: absolute; inset: 0;
-  background: #fff;     /* evita parpadeos en cambio de imagen */
-  opacity: 0;
+  position: absolute; inset: 0; background:#fff; opacity: 0;
   animation: fade-cycle var(--carousel-duration) ease-in-out infinite;
 }
 .fade-slide--1{ animation-delay: 0ms; }
 .fade-slide--2{ animation-delay: calc(var(--carousel-duration) / 3); }
 .fade-slide--3{ animation-delay: calc(2 * var(--carousel-duration) / 3); }
-
-/* 3 fotos: cada una visible ~1/3 del ciclo, con fundido */
 @keyframes fade-cycle{
-  0%   { opacity: 0; }
-  5%   { opacity: 1; }
-  30%  { opacity: 1; }
-  35%  { opacity: 0; }
-  100% { opacity: 0; }
+  0%{opacity:0} 5%{opacity:1} 30%{opacity:1} 35%{opacity:0} 100%{opacity:0}
 }
-
-/* Pausa al hover */
 .fade-carousel:hover .fade-slide{ animation-play-state: paused; }
-
-/* Accesibilidad: menos animación si el usuario lo pide */
 @media (prefers-reduced-motion: reduce){
   .fade-slide{ animation: none; opacity: 1; }
   .fade-slide:not(.fade-slide--1){ display: none; }
 }
 
 /* =========================
-   🧩 Helpers de iconografía
+   🧩 Iconografía / listas
    ========================= */
 .icon{
-  width: 1.05em;
-  height: 1.05em;
-  display: inline-block;
-  vertical-align: -0.15em;
+  width: 1.25em; height: 1.25em;
+  display:inline-block; vertical-align:-0.2em;
   color: var(--forest-700);
 }
-.li{ display: flex; gap: .6rem; align-items: flex-start; }
-.li .icon{ flex: none; margin-top: .15rem; }
+.li{ display:flex; gap:.6rem; align-items:flex-start; }
+.li .icon{ flex:none; margin-top:.15rem; }
 
-/* Navbar por encima de todo (sigue el scroll) */
-.navbar{ z-index: 100; }
+/* Listas técnicas más prolijas */
+.ul{ display:grid; gap:.5rem; }
+.subul{ margin:.25rem 0 .5rem 1.5rem; display:grid; gap:.25rem; font-size:.95em; }
 
-/* Menú móvil: se ancla bajo el navbar, cubre ancho completo y queda por encima del contenido */
-.menu-mobile{
-  position: fixed;
-  top: var(--navbar-h);
-  left: 0; right: 0;
-  z-index: 110;
-  margin-top: .5rem;     /* pequeño gap bajo el header */
-  max-height: 70vh;      /* por si hay muchos items */
-  overflow: auto;
-  background: var(--card);
-  border: var(--border);
-  box-shadow: var(--shadow);
+/* Footer verde */
+.footer-green{
+  background: var(--olive-500);
+  color: #0e1a16;
+  border-top: 1px solid rgba(13,20,17,.08);
 }
+
+/* Flechas sobre imágenes */
+.arrow-btn{
+  position:absolute; top:50%; transform: translateY(-50%);
+  width: 36px; height: 36px; border-radius: 9999px;
+  display:flex; align-items:center; justify-content:center;
+  background: rgba(255,255,255,.9);
+  border: 1px solid rgba(13,20,17,.12);
+  box-shadow: 0 6px 20px rgba(0,0,0,.12);
+}
+.arrow-btn:hover{ background:#fff; }
+.arrow-left{ left: .5rem; }
+.arrow-right{ right: .5rem; }
+
+/* Lightbox de imagen a pantalla completa */
+.lightbox{
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(0,0,0,.7);
+  display:grid; place-items:center;
+}
+.lightbox__img{ max-width:96vw; max-height:90vh; width:auto; height:auto; object-fit:contain; }
+.lightbox__control{
+  position:absolute; top:50%; transform:translateY(-50%);
+  width: 48px; height: 48px; border-radius:9999px;
+  display:flex; align-items:center; justify-content:center;
+  background: rgba(0,0,0,.45); color:#fff;
+}
+.lightbox__control:hover{ background: rgba(0,0,0,.6); }
+.lightbox__prev{ left: 1rem; }
+.lightbox__next{ right: 1rem; }
+
+/* Tamaño fijo para íconos de redes en tarjetas de contacto */
+.brand-ico{ width:20px; height:20px; }
