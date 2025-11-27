@@ -368,7 +368,7 @@ export default function Page() {
                 Configurables con opciones off-grid y terminaciones premium.
               </p>
               <p className="mt-1 text-xs md:text-sm font-semibold" style={{ color: "var(--forest-700)" }}>
-                Valor de referencia: <span className="font-bold">USD 800 por m²</span>.
+                Valor de referencia: <span className="font-bold">USD 400 por m²</span>.
               </p>
             </header>
           </div>
@@ -447,7 +447,7 @@ export default function Page() {
                         <strong className="text-[var(--forest-700)]">
                           Precio estimado:
                         </strong>{" "}
-                        USD 12.000 (a 800 USD/m²)
+                        USD 6.000 (a 400 USD/m²)
                       </span>
                     </li>
                   </ul>
@@ -528,7 +528,7 @@ export default function Page() {
                         <strong className="text-[var(--forest-700)]">
                           Precio estimado:
                         </strong>{" "}
-                        USD 32.000 (a 800 USD/m²)
+                        USD 16.000 (a 400 USD/m²)
                       </span>
                     </li>
                   </ul>
